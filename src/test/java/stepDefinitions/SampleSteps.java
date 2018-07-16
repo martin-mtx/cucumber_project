@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SampleSteps {
     private WebDriver driver;
@@ -62,5 +63,70 @@ public class SampleSteps {
             driver.findElement(By.id(e.getKey())).clear();
             driver.findElement(By.id(e.getKey())).sendKeys(e.getValue());
         }
+    }
+
+    @And("^I should see home page description$")
+    public void iShouldSeeHomePageDescription() throws Throwable {
+        assertEquals("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                driver.findElement(By.cssSelector("p")).getText());
+    }
+
+    @When("^I am on page locator$")
+    public void iAmOnPageLocator() throws Throwable {
+        driver.get("https://kristinek.github.io/test-sample/examples/loc");
+        assertEquals("https://kristinek.github.io/test-sample/examples/loc",
+                driver.getCurrentUrl());
+    }
+
+    @Then("^I should see a heading text$")
+    public void iShouldSeeAHeadingText() throws Throwable {
+        assertTrue(driver.findElement(By.id("heading_1")).isDisplayed());
+        assertEquals("Heading 1",
+                driver.findElement(By.xpath("//h2[1]")).getText());
+    }
+
+    @And("^I change age to (\\d+)$")
+    public void iChangeAgeTo(int age) throws Throwable {
+        String newAge = String.valueOf(age);
+        driver.findElement(By.id("age")).clear();
+        driver.findElement(By.id("age")).sendKeys(newAge);
+    }
+
+    @And("^I change name to \"([^\"]*)\"$")
+    public void iChangeNameTo(String blabla) throws Throwable {
+        driver.findElement(By.id("name")).clear();
+        driver.findElement(By.id("name")).sendKeys(blabla);
+    }
+
+    @Given("^I am on task page$")
+    public void iAmOnTaskPage() throws Throwable {
+        driver.get("https://kristinek.github.io/test-sample/tasks/task1");
+        assertEquals("https://kristinek.github.io/test-sample/tasks/task1",
+                driver.getCurrentUrl());
+    }
+
+    @When("^I enter number: (\\d+)$")
+    public void iEnterNumber(int arg0) throws Throwable {
+        String number = String.valueOf(arg0);
+        driver.findElement(By.id("numb")).clear();
+        driver.findElement(By.id("numb")).sendKeys(number);
+        driver.findElement(By.xpath("//*[@type='button']")).click();
+    }
+
+    @Then("^I should see an error: \"([^\"]*)\"$")
+    public void iShouldSeeAnError(String errorText) throws Throwable {
+        assertEquals(errorText, driver.findElement(By.id("ch1_error")).getText());
+    }
+
+    @Given("^I am on task4 page$")
+    public void iAmOnTask4Page() throws Throwable {
+        driver.get("https://kristinek.github.io/test-sample/tasks/task4");
+    }
+
+    @And("^I choose option Good$")
+    public void iChooseOptionGood() throws Throwable {
+        driver.findElement(By.cssSelector("[value=\"lang_sp\"]")).sendKeys(" ");
+        driver.findElement(By.xpath("//*[@value=\"good\"]")).click();
+        System.out.println();
     }
 }
