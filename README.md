@@ -3,9 +3,9 @@
 2. In IDEA open project `cucumber_project` from "Desktop/cucumber_project"
 3. In IDEA check in project structure, that:
    * Project settings:
-   ![Alt text](project_settings.png?raw=true "Project Settings")
+   ![Alt text](project_settings.PNG?raw=true "Project Settings")
    * Modules settings:
-   ![Alt text](module_settings.png?raw=true "Module Settings")
+   ![Alt text](module_settings.PNG?raw=true "Module Settings")
 4. After making changes do:
    * `git add  .`
    * `git commit -m "message"`
