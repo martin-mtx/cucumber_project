@@ -117,16 +117,4 @@ public class SampleSteps {
     public void iShouldSeeAnError(String errorText) throws Throwable {
         assertEquals(errorText, driver.findElement(By.id("ch1_error")).getText());
     }
-
-    @Given("^I am on task4 page$")
-    public void iAmOnTask4Page() throws Throwable {
-        driver.get("https://kristinek.github.io/test-sample/tasks/task4");
-    }
-
-    @And("^I choose option Good$")
-    public void iChooseOptionGood() throws Throwable {
-        driver.findElement(By.cssSelector("[value=\"lang_sp\"]")).sendKeys(" ");
-        driver.findElement(By.xpath("//*[@value=\"good\"]")).click();
-        System.out.println();
-    }
 }
