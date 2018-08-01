@@ -31,7 +31,3 @@ Feature: Introduction to cucumber part 4
       | name | age | message                      |
       | Ann  | 5   | Hello, Ann, you are a kid    |
       | Bob  | 61  | Hello, Bob, you are an adult |
-  @test
-  Scenario: Check that correct data appears
-    Given I am on task4 page
-    And I choose option Good
