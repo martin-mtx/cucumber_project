@@ -106,8 +106,8 @@ public class SampleSteps {
     }
 
     @When("^I enter number: (\\d+)$")
-    public void iEnterNumber(int arg0) throws Throwable {
-        String number = String.valueOf(arg0);
+    public void iEnterNumber(int aNumber) throws Throwable {
+        String number = String.valueOf(aNumber);
         driver.findElement(By.id("numb")).clear();
         driver.findElement(By.id("numb")).sendKeys(number);
         driver.findElement(By.xpath("//*[@type='button']")).click();
