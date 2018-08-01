@@ -18,8 +18,6 @@
    ![Alt text](img/git_commit_3.png?raw=true "git commit 3 via IDEA")
    ![Alt text](img/git_push_1.png?raw=true "git push 1 via IDEA")
    ![Alt text](img/git_push_2.png?raw=true "git push 2 via IDEA")
-   
-   sNote: replace <name_surname> with your name and surnameit 
 
 ### Task
 Create a new Feature file (e.g. in the folder "features" click "New" -> "File" -> "Task.feature"), and inside write a few scenarios for the page https://kristinek.github.io/test-sample/tasks/task4 
