@@ -7,6 +7,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.util.Map;
 
@@ -78,6 +79,12 @@ public class SampleSteps {
                 driver.getCurrentUrl());
     }
 
+    @Then("^I should see heading two text$")
+    public void i_should_see_heading_two_text() throws Throwable {
+        assertTrue(driver.findElement(By.id("heading_2")).isDisplayed());
+        assertEquals("Heading 2", driver.findElement(By.id("heading_2")).getText());
+    }
+
     @Then("^I should see a heading text$")
     public void iShouldSeeAHeadingText() throws Throwable {
         assertTrue(driver.findElement(By.id("heading_1")).isDisplayed());
@@ -113,8 +120,94 @@ public class SampleSteps {
         driver.findElement(By.xpath("//*[@type='button']")).click();
     }
 
+
+    @Given("^I am on Action Page$")
+    public void i_am_on_Action_Page() throws Throwable {
+        driver.get("https://kristinek.github.io/test-sample/examples/act");
+    }
+
+    @When("^I enter number (\\d+) in number field$")
+    public void i_enter_number_in_number_field(int number) throws Throwable {
+        WebElement numberField = driver.findElement(By.id("number"));
+        numberField.clear();
+        numberField.sendKeys(String.valueOf(number));
+    }
+
+    @When("^I press result$")
+    public void i_press_result() throws Throwable {
+        driver.findElement(By.id("result_button_number")).click();
+    }
+
+//    @Then("^message \"([^\"]*)\"(\\d+)\"\" is seen$")
+//    public void message_is_seen(String messageStart, int numberInMessage) throws Throwable {
+//        // "You entered number: "7"" ->
+//        assertEquals(messageStart + '"' + numberInMessage + '"',
+//                driver.findElement(By.id("result_number")).getText());
+//    }
+
+    @Then("^message \"(.*)\" is seen$")
+    public void message_is_seen(String message) throws Throwable {
+        // "You entered number: "7"" ->
+        assertEquals(message,
+                driver.findElement(By.id("result_number")).getText());
+    }
+
     @Then("^I should see an error: \"([^\"]*)\"$")
     public void iShouldSeeAnError(String errorText) throws Throwable {
         assertEquals(errorText, driver.findElement(By.id("ch1_error")).getText());
     }
+
+//  ______________________________________________________________________________
+
+    @Given("^I am on the Feedback page$")
+    public void I_am_on_the_Feedback_page() throws Throwable {
+        driver.get("https://kristinek.github.io/test-sample/tasks/task4");
+    }
+
+    @When("^I enter name on the Feedback page: \"([^\"]*)\"$")
+    public void I_enter_name_on_the_Feedback_page(String name) throws Throwable {
+        driver.findElement(By.id("fb_name")).clear();
+        driver.findElement(By.id("fb_name")).sendKeys(name);
+    }
+
+    @When("^I choose my language$")
+    public void I_choose_my_language() throws Throwable {
+        driver.findElement(By.cssSelector(".w3-check[type='checkbox'][value='Chinese']")).click();
+    }
+
+    @When("^I choose my two languages$")
+    public void I_choose_my_two_languages() throws Throwable {
+        driver.findElement(By.cssSelector(".w3-check[type='checkbox'][value='Chinese']")).click();
+        driver.findElement(By.cssSelector(".w3-check[type='checkbox'][value='French']")).click();
+    }
+
+    @And ("^I click Send$")
+    public void I_click_Send() throws Throwable {
+        driver.findElement(By.cssSelector(".w3-btn-block.w3-blue.w3-section[type='submit']")).click();
+    }
+
+    @And ("^I click Yes")
+    public void I_click_Yes() throws Throwable {
+        driver.findElement(By.cssSelector(".w3-btn.w3-green.w3-xlarge[onclick='openFeedback()']")).click();
+    }
+
+    @Then("^Message \"(.*)\" is seen$")
+    public void Check_Thank_You_Page(String message){
+        assertEquals(message, driver.findElement(By.id("message")).getText());
+    }
+
+    @Then("^I see language message: \"([^\"]*)\"$")
+    public void I_see_language_message(String myOneLanguage) throws Throwable {
+        assertEquals(myOneLanguage, driver.findElement(By.cssSelector("div.description:nth-child(3) > p")).getText());
+    }
+
+    @Then("^I see two language message: \"([^\"]*)\"$")
+    public void I_see_two_language_message(String myOneLanguage) throws Throwable {
+        assertEquals(myOneLanguage, driver.findElement(By.cssSelector("div.description:nth-child(3) > p")).getText());
+    }
+
+
+
+
+
 }
