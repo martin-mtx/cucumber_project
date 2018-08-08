@@ -1,14 +1,17 @@
 package stepDefinitions;
 
+import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.api.java.gl.E;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -157,7 +160,7 @@ public class SampleSteps {
         assertEquals(errorText, driver.findElement(By.id("ch1_error")).getText());
     }
 
-//  ______________________________________________________________________________
+//  Task 1 ______________________________________________________________________________
 
     @Given("^I am on the Feedback page$")
     public void I_am_on_the_Feedback_page() throws Throwable {
@@ -181,18 +184,18 @@ public class SampleSteps {
         driver.findElement(By.cssSelector(".w3-check[type='checkbox'][value='French']")).click();
     }
 
-    @And ("^I click Send$")
+    @And("^I click Send$")
     public void I_click_Send() throws Throwable {
         driver.findElement(By.cssSelector(".w3-btn-block.w3-blue.w3-section[type='submit']")).click();
     }
 
-    @And ("^I click Yes")
+    @And("^I click Yes")
     public void I_click_Yes() throws Throwable {
         driver.findElement(By.cssSelector(".w3-btn.w3-green.w3-xlarge[onclick='openFeedback()']")).click();
     }
 
     @Then("^Message \"(.*)\" is seen$")
-    public void Check_Thank_You_Page(String message){
+    public void Check_Thank_You_Page(String message) {
         assertEquals(message, driver.findElement(By.id("message")).getText());
     }
 
@@ -206,8 +209,94 @@ public class SampleSteps {
         assertEquals(myOneLanguage, driver.findElement(By.cssSelector("div.description:nth-child(3) > p")).getText());
     }
 
+//  Sample  ______________________________________________________________________________
 
+    @When("^I enter data:$")
+    public void I_enter_data(Map<String, String> DataToEnter) throws Throwable {
+        for (Map.Entry<String, String> e : DataToEnter.entrySet()) {
+            driver.findElement(By.name(e.getKey())).clear();
+            driver.findElement(By.name(e.getKey())).sendKeys(e.getValue());
+        }
+    }
 
+    @Then("^I see text:$")
+    public void I_see_text_on_the_feedback_page(Map<String, String> DataToCheck) throws Throwable {
+        for (Map.Entry<String, String> e : DataToCheck.entrySet()) {
+            assertEquals(e.getValue(), driver.findElement(By.id(e.getKey())).getText());
+        }
+    }
+//  Task 2 ______________________________________________________________________________
 
+    @Given("^I am on the jobs page$")
+    public void I_am_on_the_jobs_page() throws Throwable {
+        driver.get("https://kristinek.github.io/test-sample/tasks/task3");
+    }
+
+    @When("^I press the Add person button$")
+    public void I_press_the_Add_person_button() throws Throwable {
+        driver.findElement(By.id("addPersonBtn")).click();
+    }
+
+    @And("^I enter person data:$")
+    public void I_enter_person_data(Map<String, String> DataToEnter) throws Throwable {
+        for (Map.Entry<String, String> e : DataToEnter.entrySet()) {
+            driver.findElement(By.id(e.getKey())).clear();
+            driver.findElement(By.id(e.getKey())).sendKeys(e.getValue());
+        }
+    }
+
+    @And("^I click the Add button$")
+    public void I_click_the_Add_button() throws Throwable {
+        driver.findElement(By.id("modal_button")).click();
+    }
+
+    @Then("^I see the person with a name \"(.*)\" and a job \"(.*)\"$")
+    public void I_see_the_person(String name, String job){
+        assertEquals(name, driver.findElement(By.xpath("//*[@id='person3']/span[@class='w3-xlarge name']")).getText());
+        assertEquals(job, driver.findElement(By.xpath("//*[@id='person3']/span[@class='job']")).getText());
+    }
+
+    @Then("^I see the new person with a name \"(.*)\" and a job \"(.*)\"$")
+    public void I_see_the_new_person(String Name, String Job){
+        assertEquals(Name, driver.findElement(By.xpath("//*[@id='person3']/span[@class='w3-xlarge name']")).getText());
+        assertEquals(Job, driver.findElement(By.xpath("//*[@id='person3']/span[@class='job']")).getText());
+    }
+
+    @And("^I click the Edit person button$")
+    public void I_click_the_Edit_person_button() throws Throwable {
+        driver.findElement(By.cssSelector("[onclick='openModalForEditPerson(3)']")).click();
+    }
+
+    @When("^I click the Edit button$")
+    public void I_click_the_Edit_button() throws Throwable {
+        driver.findElement(By.id("modal_button")).click();
+    }
+
+    @And("^I press the Add another person button$")
+    public void I_click_Edit_button() throws Throwable {
+        driver.findElement(By.id("addPersonBtn")).click();
+    }
+
+    @And("^I press the Delete button$")
+    public void I_press_the_Delete_button() throws Throwable {
+        driver.findElement(By.cssSelector("[onclick='deletePerson(3)']")).click();
+    }
+
+    @And("^I click the Cancel button$")
+    public void I_click_the_Cancel_button() throws Throwable {
+        driver.findElement(By.cssSelector("[onclick='window.history.back()']")).click();
+    }
+
+    @Then("^I shouldnt see the person \"(.*)\" in the list$")
+    public void I_shouldnt_see_the_person_in_the_list(String name) throws Throwable {
+        driver.findElements(By.xpath("//*[@class='w3-xlarge name' and text()='"+name +"']")).size();
+        assertEquals(0, driver.findElements(By.xpath("//*[@class='w3-xlarge name' and text()='"+name +"']")).size());
+    }
+
+    @And("^I click the Reset button$")
+    public void I_click_the_Reset_button() throws Throwable {
+        driver.findElement(By.cssSelector("[onclick='resetListOfPeople()']")).click();
+    }
 
 }
+
